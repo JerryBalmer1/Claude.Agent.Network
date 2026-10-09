@@ -1,12 +1,13 @@
 # CLAUDE.md
 
 mitmproxy capture sidecar (Compose fragment) plus a host-side PowerShell 7.4+ module to read the capture.
-One of three sibling repos expected side by side (e.g. `C:\__Code\`):
+One of four sibling repos expected side by side (e.g. `C:\__Code\`):
 
 - `Claude.Agent` builds the agent image, `include:`s `compose/sidecar.yaml` from here, and its Smoke task
   is the only end-to-end test of `ConvertTo-NetworkCapture`.
 - `Claude.Agent.Ledger` is the ledger module.
 - `Claude.Agent.Network` (this repo).
+- `Claude.Agent.Policy` is the tool policy and its Claude Code hooks, baked into the agent image.
 
 ## Layout
 
