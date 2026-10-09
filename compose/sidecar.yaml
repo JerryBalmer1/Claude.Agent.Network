@@ -1,0 +1,44 @@
+# Compose fragment: the mitmproxy capture sidecar and the two networks that make it the only way out.
+# Consumers pull it in with `include: [../Claude.Agent.Network/compose/sidecar.yaml]`, put their agent on
+# `inside` only, and point its HTTP_PROXY/HTTPS_PROXY at http://mitm:8080.
+#
+# `inside` is internal: Docker gives it no gateway, so a container on it alone reaches nothing but its
+# neighbours. `mitm` is the one service on both networks. The proxy env is a convenience; the network is the control.
+#
+# The agent mounts mitm-ca read-only to trust the CA. It never mounts capture; the host reads that.
+#
+# Egress is an allowlist (src/addons/allowlist.py): ALLOWED_HOSTS, exact host names, comma-separated. Anything
+# else gets a 403 (HTTPS at CONNECT, before any handshake) and is still recorded in flows.mitm as refused.
+# Widening it is a change to ALLOWED_HOSTS here, never to the addon (design 4).
+
+services:
+  mitm:
+    image: mitmproxy/mitmproxy:12.2.3
+    # Named volumes start root-owned; give them to the mitmproxy user, then drop privileges.
+    entrypoint: ["/bin/sh", "-c", "chown -R mitmproxy:mitmproxy /ca /capture && exec gosu mitmproxy \"$$@\"", "--"]
+    command: ["mitmdump", "--listen-port", "8080", "--set", "confdir=/ca", "-s", "/addons/allowlist.py", "--save-stream-file", "/capture/flows.mitm"]
+    environment:
+      HOME: /home/mitmproxy
+      ALLOWED_HOSTS: api.anthropic.com
+    networks:
+      - inside
+      - outside
+    volumes:
+      - mitm-ca:/ca
+      - capture:/capture
+      - ../src/addons:/addons:ro
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import socket; socket.create_connection(('127.0.0.1', 8080), 2).close()"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+
+networks:
+  inside:
+    internal: true
+  outside: {}
+
+volumes:
+  mitm-ca: {}
+  capture: {}

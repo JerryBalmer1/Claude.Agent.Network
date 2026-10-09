@@ -1,0 +1,29 @@
+[
+  {
+    "method": "GET",
+    "host": "api.anthropic.com",
+    "path": "/v1/models",
+    "status": 401,
+    "requestBytes": 0,
+    "responseBytes": 130,
+    "started": "2026-10-08T12:00:00.000Z"
+  },
+  {
+    "method": "GET",
+    "host": "registry.npmjs.org",
+    "path": "/@anthropic-ai%2fclaude-code",
+    "status": 200,
+    "requestBytes": 0,
+    "responseBytes": 52311,
+    "started": "2026-10-08T12:00:01.250Z"
+  },
+  {
+    "method": "POST",
+    "host": "statsig.anthropic.com",
+    "path": "/v1/initialize",
+    "status": 202,
+    "requestBytes": 812,
+    "responseBytes": 2,
+    "started": "2026-10-08T12:00:02.500Z"
+  }
+]

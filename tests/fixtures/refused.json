@@ -1,0 +1,52 @@
+[
+  {
+    "method": "POST",
+    "host": "api.anthropic.com",
+    "path": "/v1/messages?beta=true",
+    "status": 200,
+    "requestBytes": 2048,
+    "responseBytes": 512,
+    "started": "2026-10-08T12:00:00.000Z",
+    "refused": false
+  },
+  {
+    "method": "CONNECT",
+    "host": "http-intake.logs.us5.datadoghq.com",
+    "path": "",
+    "status": 403,
+    "requestBytes": 0,
+    "responseBytes": 63,
+    "started": "2026-10-08T12:00:01.000Z",
+    "refused": true
+  },
+  {
+    "method": "POST",
+    "host": "api.anthropic.com",
+    "path": "/api/event_logging/v2/batch",
+    "status": 200,
+    "requestBytes": 900,
+    "responseBytes": 20,
+    "started": "2026-10-08T12:00:02.000Z",
+    "refused": false
+  },
+  {
+    "method": "CONNECT",
+    "host": "http-intake.logs.us5.datadoghq.com",
+    "path": "",
+    "status": 403,
+    "requestBytes": 0,
+    "responseBytes": 63,
+    "started": "2026-10-08T12:00:03.000Z",
+    "refused": true
+  },
+  {
+    "method": "CONNECT",
+    "host": "statsig.anthropic.com",
+    "path": "",
+    "status": 403,
+    "requestBytes": 0,
+    "responseBytes": 50,
+    "started": "2026-10-08T12:00:04.000Z",
+    "refused": true
+  }
+]
